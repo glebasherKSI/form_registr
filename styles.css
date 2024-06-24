@@ -50,3 +50,25 @@ button:hover {
 button:disabled {
     background-color: #ccc;
 }
+.hidden {
+        display: none;
+    }
+    .toggle-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .toggle-btn {
+        background-color: #ccc;
+        border: 1px solid #ccc;
+        border-radius: 25px;
+        cursor: pointer;
+        padding: 10px 20px;
+        margin: 5px;
+        transition: background-color 0.3s;
+    }
+    .toggle-btn.active {
+        background: var(--tg-theme-button-color);
+        color: var(--tg-theme-button-text-color);
+    }
