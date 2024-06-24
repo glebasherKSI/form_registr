@@ -67,13 +67,6 @@
         let resultDiv = document.getElementById('result');
 
         submitBtn.addEventListener('click', () => {
-            let mail = document.getElementById('email').value;
-            let phone = document.getElementById('phone').value;
-            let data = {
-                mail: mail,
-                phone: phone
-            };
-            tg.sendData(JSON.stringify(data));
             registrationForm.style.display = 'none';
             quizForm.style.display = 'block';
         });
