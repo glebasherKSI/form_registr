@@ -6,19 +6,30 @@
     <title>Registration Form</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <form id="registration-form">
             <h1>Регистрация</h1>
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <label for="phone">Номер телефона:</label>
-            <input type="tel" id="phone" name="phone" required>
-            <button type="button" id="submit-btn">Участвовать</button>
+            <button type="button" id="phone-btn">Ввести номер телефона</button>
+            <button type="button" id="email-btn">Ввести почту</button>
+            <div id="phone-input" class="hidden">
+                <label for="phone">Номер телефона:</label>
+                <input type="tel" id="phone" name="phone">
+            </div>
+            <div id="email-input" class="hidden">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+            </div>
+            <button type="button" id="submit-btn" class="hidden">Участвовать</button>
         </form>
 
-        <form id="quiz-form" style="display:none;">
+        <form id="quiz-form" class="hidden">
             <h1>Тест</h1>
             <div>
                 <p>Вопрос 1: Какой цвет небо?</p>
@@ -50,7 +61,7 @@
             <button type="button" id="check-btn">Проверить</button>
         </form>
 
-        <div id="result" style="display:none;">
+        <div id="result" class="hidden">
             <h1>Ура, вы все правильно ответили! Ждите промокод на почту.</h1>
         </div>
     </div>
@@ -60,15 +71,38 @@
         let tg = window.Telegram.WebApp;
         tg.expand();
 
+        let phoneBtn = document.getElementById('phone-btn');
+        let emailBtn = document.getElementById('email-btn');
+        let phoneInputDiv = document.getElementById('phone-input');
+        let emailInputDiv = document.getElementById('email-input');
         let submitBtn = document.getElementById('submit-btn');
         let registrationForm = document.getElementById('registration-form');
         let quizForm = document.getElementById('quiz-form');
         let checkBtn = document.getElementById('check-btn');
         let resultDiv = document.getElementById('result');
 
+        phoneBtn.addEventListener('click', () => {
+            phoneInputDiv.classList.remove('hidden');
+            emailInputDiv.classList.add('hidden');
+            submitBtn.classList.remove('hidden');
+        });
+
+        emailBtn.addEventListener('click', () => {
+            emailInputDiv.classList.remove('hidden');
+            phoneInputDiv.classList.add('hidden');
+            submitBtn.classList.remove('hidden');
+        });
+
         submitBtn.addEventListener('click', () => {
-            registrationForm.style.display = 'none';
-            quizForm.style.display = 'block';
+            let mail = document.getElementById('email').value;
+            let phone = document.getElementById('phone').value;
+            let data = {
+                mail: mail || '',
+                phone: phone || ''
+            };
+            tg.sendData(JSON.stringify(data));
+            registrationForm.classList.add('hidden');
+            quizForm.classList.remove('hidden');
         });
 
         checkBtn.addEventListener('click', () => {
@@ -77,8 +111,8 @@
             let q3 = document.querySelector('input[name="q3"]:checked').value;
 
             if (q1 === 'blue' && q2 === '8' && q3 === 'jupiter') {
-                quizForm.style.display = 'none';
-                resultDiv.style.display = 'block';
+                quizForm.classList.add('hidden');
+                resultDiv.classList.remove('hidden');
             } else {
                 alert('Вы ответили неправильно. Попробуйте снова.');
             }
