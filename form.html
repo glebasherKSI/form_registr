@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,user-scalable = no, initial-scale=1.0, maximum-scale =1.0 , minimum-scale =1.0">
+    <meta name="viewport" content="width=device-width,user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>Registration Form</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
@@ -15,27 +15,81 @@
             <input type="email" id="email" name="email" required>
             <label for="phone">Номер телефона:</label>
             <input type="tel" id="phone" name="phone" required>
-            <button type="submit" id="submit-btn" >Участвовать</button>
+            <button type="button" id="submit-btn">Участвовать</button>
         </form>
+
+        <form id="quiz-form" style="display:none;">
+            <h1>Тест</h1>
+            <div>
+                <p>Вопрос 1: Какой цвет небо?</p>
+                <input type="radio" id="q1a1" name="q1" value="blue">
+                <label for="q1a1">Синий</label><br>
+                <input type="radio" id="q1a2" name="q1" value="green">
+                <label for="q1a2">Зелёный</label><br>
+                <input type="radio" id="q1a3" name="q1" value="red">
+                <label for="q1a3">Красный</label>
+            </div>
+            <div>
+                <p>Вопрос 2: Сколько ног у паука?</p>
+                <input type="radio" id="q2a1" name="q2" value="6">
+                <label for="q2a1">6</label><br>
+                <input type="radio" id="q2a2" name="q2" value="8">
+                <label for="q2a2">8</label><br>
+                <input type="radio" id="q2a3" name="q2" value="10">
+                <label for="q2a3">10</label>
+            </div>
+            <div>
+                <p>Вопрос 3: Какая планета самая большая в Солнечной системе?</p>
+                <input type="radio" id="q3a1" name="q3" value="earth">
+                <label for="q3a1">Земля</label><br>
+                <input type="radio" id="q3a2" name="q3" value="jupiter">
+                <label for="q3a2">Юпитер</label><br>
+                <input type="radio" id="q3a3" name="q3" value="mars">
+                <label for="q3a3">Марс</label>
+            </div>
+            <button type="button" id="check-btn">Проверить</button>
+        </form>
+
+        <div id="result" style="display:none;">
+            <h1>Ура, вы все правильно ответили! Ждите промокод на почту.</h1>
+        </div>
     </div>
     <script src="scripts.js"></script>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-        let tg = window.Telegram.WebApp
-        
+        let tg = window.Telegram.WebApp;
         tg.expand();
-        let btn = document.getElementById('submit-btn');
 
-        btn.addEventListener('click',() =>{
+        let submitBtn = document.getElementById('submit-btn');
+        let registrationForm = document.getElementById('registration-form');
+        let quizForm = document.getElementById('quiz-form');
+        let checkBtn = document.getElementById('check-btn');
+        let resultDiv = document.getElementById('result');
+
+        submitBtn.addEventListener('click', () => {
             let mail = document.getElementById('email').value;
             let phone = document.getElementById('phone').value;
             let data = {
-                mail:mail,
-                phone:phone
-            }
+                mail: mail,
+                phone: phone
+            };
             tg.sendData(JSON.stringify(data));
-            tg.close('');
-        })
+            registrationForm.style.display = 'none';
+            quizForm.style.display = 'block';
+        });
+
+        checkBtn.addEventListener('click', () => {
+            let q1 = document.querySelector('input[name="q1"]:checked').value;
+            let q2 = document.querySelector('input[name="q2"]:checked').value;
+            let q3 = document.querySelector('input[name="q3"]:checked').value;
+
+            if (q1 === 'blue' && q2 === '8' && q3 === 'jupiter') {
+                quizForm.style.display = 'none';
+                resultDiv.style.display = 'block';
+            } else {
+                alert('Вы ответили неправильно. Попробуйте снова.');
+            }
+        });
     </script>
 </body>
 </html>
