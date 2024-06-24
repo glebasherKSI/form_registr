@@ -16,8 +16,10 @@
     <div class="container">
         <form id="registration-form">
             <h1>Регистрация</h1>
-            <button type="button" id="phone-btn">Ввести номер телефона</button>
-            <button type="button" id="email-btn">Ввести почту</button>
+            <div class="toggle-container">
+                <button type="button" id="phone-btn" class="toggle-btn">Ввести номер телефона</button>
+                <button type="button" id="email-btn" class="toggle-btn">Ввести почту</button>
+            </div>
             <div id="phone-input" class="hidden">
                 <label for="phone">Номер телефона:</label>
                 <input type="tel" id="phone" name="phone">
