@@ -12,53 +12,64 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <form id="registration-form">
             <h1>Регистрация</h1>
-            <div class="toggle-container">
-                <button type="button" id="phone-btn" class="toggle-btn">Телефон</button>
-                <button type="button" id="email-btn" class="toggle-btn">Почта</button>
-            </div>
-            <div id="phone-input" class="hidden">
-                <label for="phone">Номер телефона:</label>
-                <input type="tel" id="phone" name="phone">
-            </div>
-            <div id="email-input" class="hidden">
+            <div id="email-input">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email">
+                <input type="email" id="email" name="email" placeholder="index@gmail.com">
             </div>
-            <button type="button" id="submit-btn" class="hidden">Участвовать</button>
+            <button type="button" id="submit-btn" disabled>Участвовать</button>
         </form>
-
+        <script src="scripts.js"></script>
         <form id="quiz-form" class="hidden">
             <h1>Тест</h1>
-            <div>
+            <div class="question">
                 <p>Вопрос 1: Какой цвет небо?</p>
-                <input type="radio" id="q1a1" name="q1" value="blue"> <label for="q1a1">Синий</label><br>
-                
-                <input type="radio" id="q1a2" name="q1" value="green">
-                <label for="q1a2">Зелёный</label><br>
-                <input type="radio" id="q1a3" name="q1" value="red">
-                <label for="q1a3">Красный</label>
+                <div class="option">
+                    <input type="radio" id="q1a1" name="q1" value="blue"> 
+                    <label for="q1a1">Синий</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q1a2" name="q1" value="green">
+                    <label for="q1a2">Зелёный</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q1a3" name="q1" value="red">
+                    <label for="q1a3">Красный</label>
+                </div>
             </div>
-            <div>
+            <div class="question">
                 <p>Вопрос 2: Сколько ног у паука?</p>
-                <input type="radio" id="q2a1" name="q2" value="6">
-                <label for="q2a1">6</label><br>
-                <input type="radio" id="q2a2" name="q2" value="8">
-                <label for="q2a2">8</label><br>
-                <input type="radio" id="q2a3" name="q2" value="10">
-                <label for="q2a3">10</label>
+                <div class="option">
+                    <input type="radio" id="q2a1" name="q2" value="6">
+                    <label for="q2a1">6</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q2a2" name="q2" value="8">
+                    <label for="q2a2">8</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q2a3" name="q2" value="10">
+                    <label for="q2a3">10</label>
+                </div>
             </div>
-            <div>
+            <div class="question">
                 <p>Вопрос 3: Какая планета самая большая в Солнечной системе?</p>
-                <input type="radio" id="q3a1" name="q3" value="earth">
-                <label for="q3a1">Земля</label><br>
-                <input type="radio" id="q3a2" name="q3" value="jupiter">
-                <label for="q3a2">Юпитер</label><br>
-                <input type="radio" id="q3a3" name="q3" value="mars">
-                <label for="q3a3">Марс</label>
+                <div class="option">
+                    <input type="radio" id="q3a1" name="q3" value="earth">
+                    <label for="q3a1">Земля</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q3a2" name="q3" value="jupiter">
+                    <label for="q3a2">Юпитер</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="q3a3" name="q3" value="mars">
+                    <label for="q3a3">Марс</label>
+                </div>
             </div>
             <button type="button" id="check-btn">Проверить</button>
         </form>
@@ -67,15 +78,11 @@
             <h1>Ура, вы все правильно ответили! Ждите промокод на почту.</h1>
         </div>
     </div>
-    <script src="scripts.js"></script>
+    
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
-
-        let phoneBtn = document.getElementById('phone-btn');
-        let emailBtn = document.getElementById('email-btn');
-        let phoneInputDiv = document.getElementById('phone-input');
         let emailInputDiv = document.getElementById('email-input');
         let submitBtn = document.getElementById('submit-btn');
         let registrationForm = document.getElementById('registration-form');
@@ -83,26 +90,15 @@
         let checkBtn = document.getElementById('check-btn');
         let resultDiv = document.getElementById('result');
 
-        phoneBtn.addEventListener('click', () => {
-            phoneInputDiv.classList.remove('hidden');
-            emailInputDiv.classList.add('hidden');
-            submitBtn.classList.remove('hidden');
-        });
 
-        emailBtn.addEventListener('click', () => {
-            emailInputDiv.classList.remove('hidden');
-            phoneInputDiv.classList.add('hidden');
-            submitBtn.classList.remove('hidden');
-        });
+
+
 
         submitBtn.addEventListener('click', () => {
             let mail = document.getElementById('email').value;
-            let phone = document.getElementById('phone').value;
             let data = {
-                mail: mail || '',
-                phone: phone || ''
+                mail: mail || ''
             };
-            tg.sendData(JSON.stringify(data));
             registrationForm.classList.add('hidden');
             quizForm.classList.remove('hidden');
         });
