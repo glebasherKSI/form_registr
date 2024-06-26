@@ -5,7 +5,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
+    margin: 0 auto;
 }
 
 .container {
@@ -56,17 +56,33 @@ button:enabled {
 button:disabled {
     background-color: #ccc;
 }
+
 .question {
-    margin-bottom: 20px;
-}
-.question p {
-    margin-bottom: 20px;
-}
-.option {
-    display: inline-flex;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 250px;
+    text-align: left;
     align-items: left;
+    margin-bottom: 20px;
+    
+}
+
+.question p {
     margin-bottom: 10px;
+    
 }
+
+.option {
+    width: 150px;
+    display: flex;
+    margin-bottom: 1px;
+
+
+     /* Выравнивание по левому краю */
+}
+
 .option input[type="radio"] {
-    margin-right: 5px;
+    margin-right: 0px;
+    margin-left: 0; /* Убедитесь, что нет отступа слева */
 }
+
